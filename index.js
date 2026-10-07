@@ -30,7 +30,8 @@ app.use('/api', routes);
 app.use('/docs', (req, res, next) => {
     res.setHeader(
         "Content-Security-Policy",
-        "default-src 'self'; connect-src 'self' https://dugsiiye-nodejs-capstone-final.onrender.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+        // FIX: Added the missing bookstore domain right alongside your capstone URL
+        "default-src 'self'; connect-src 'self' https://dugsiiye-nodejs-capstone-final.onrender.com https://bookstore-api-aliha.onrender.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
     );
     next();
 }, swaggerUi.serve, swaggerUi.setup(swaggerDocs));
