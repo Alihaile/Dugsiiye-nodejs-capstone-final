@@ -34,7 +34,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 // connect database:
-mongoose.connect(process.env.MONGO_URI).then(() => {
+mongoose.connect(process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI_PROD : process.env.MONGO_URI).then(() => {
     console.log('✅ Connected to MongoDB');
 }).catch((err) => {
     console.error('❌ Error connecting to MongoDB:', err);

@@ -1,5 +1,7 @@
 
 import swaggerJsdoc from 'swagger-jsdoc';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const swaggerOptions = {
     definition: {
@@ -11,7 +13,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:3000',
+                url: process.env.NODE_ENV === 'production' ? process.env.BACKEND_URL_PROD : process.env.BACKEND_URL || 'http://localhost:3000',
                 description: 'Transactions API Documentation',
             },
         ],
