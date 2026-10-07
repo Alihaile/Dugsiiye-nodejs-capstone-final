@@ -19,7 +19,7 @@ import { apiThrotle } from './middlewares/throtle.js';
 app.use(helmet({ hidePoweredBy: true }));
 app.use(morgan('dev'));
 app.use(cors({
-    origin: [process.env.BACKEND_URL_PROD],
+    origin: [process.env.FRONTEND_URL, process.env.BACKEND_URL, process.env.BACKEND_URL_PROD],
 }));
 app.use(express.json());
 app.use(apiThrotle);
@@ -27,7 +27,13 @@ app.use(apiThrotle);
 
 app.use('/api', routes);
 //set up swagger
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/docs', (req, res, next) => {
+    res.setHeader(
+        "Content-Security-Policy",
+        "default-src 'self'; connect-src 'self' https://dugsiiye-nodejs-capstone-final.onrender.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"
+    );
+    next();
+}, swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
 app.use(notFound);
