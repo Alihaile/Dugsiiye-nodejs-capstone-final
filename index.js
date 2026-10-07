@@ -41,12 +41,24 @@ app.use(notFound);
 app.use(errorHandler);
 
 // connect database:
-mongoose.connect(process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI_PROD : process.env.MONGO_URI).then(() => {
-    console.log('✅ Connected to MongoDB');
-}).catch((err) => {
-    console.error('❌ Error connecting to MongoDB:', err);
-});
+const MONGODB_URI =
+    process.env.NODE_ENV === 'production'
+        ? process.env.MONGODB_URI_PROD
+        : process.env.MONGO_URI;
 
+mongoose.connect(MONGODB_URI)
+    .then(() => {
+        console.log('✅ Connected to MongoDB');
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('❌ Error connecting to MongoDB:', err);
+        process.exit(1);
+    });
+    
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 });
