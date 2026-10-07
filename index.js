@@ -19,7 +19,7 @@ import { apiThrotle } from './middlewares/throtle.js';
 app.use(helmet({ hidePoweredBy: true }));
 app.use(morgan('dev'));
 app.use(cors({
-    origin: [process.env.FRONTEND_URL, process.env.BACKEND_URL, process.env.BACKEND_URL_PROD],
+    origin: [process.env.BACKEND_URL_PROD],
 }));
 app.use(express.json());
 app.use(apiThrotle);
